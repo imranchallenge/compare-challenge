@@ -1,0 +1,51 @@
+﻿@model CompareIt4meChallenge.Models.CustomerPhone
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Activate Phone Number</h2>
+
+<br/>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Customer Phone</legend>
+
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.CustomerId)
+        @Html.HiddenFor(model => model.PhoneNumber)
+
+        <div class="display-label">
+            <b>Customer ID : @Html.DisplayFor(model => model.CustomerId)</b> 
+        </div>
+        <br/>
+        <div class="display-label">
+            <b> Phone Number : @Html.DisplayFor(model => model.PhoneNumber) </b>
+        </div>
+        <br />
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Active)
+        </div>
+        <br />
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Active)
+            @Html.ValidationMessageFor(model => model.Active)
+        </div>
+        <br />
+        <p>
+            <input type="submit" value="Active" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

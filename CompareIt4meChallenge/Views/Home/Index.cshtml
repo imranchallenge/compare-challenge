@@ -1,0 +1,72 @@
+﻿@model IEnumerable<CompareIt4meChallenge.Models.Person>
+@{
+    ViewBag.Title = "Home Page";
+}
+<h3>We suggest the following:</h3>
+<h2>Async File Upload</h2>
+
+@using (Ajax.BeginForm("Index", "Home", new AjaxOptions() { HttpMethod = "POST" }, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="file" name="files" id="fu1" />
+    <input type="submit" value="Upload File"/>
+}
+@Html.Hidden("RedirectTo", Url.Action("Index", "Home"))
+<div class="progress">
+    <div class="progress-bar">0%</div>
+</div>
+<div id="status"></div>
+
+@foreach (var item in Model)
+{
+    <div class="review">
+      <h4>Name: @item.Name</h4>
+      <span>Coin: @item.Coin</span>
+      <p>Code:  @item.Code</p>
+    </div>
+}
+
+<style>
+    
+   
+</style>
+@section scripts{
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+    <script>
+        (function () {
+            var bar = $('.progress-bar');
+            var percent = $('.progress-bar');
+            var status = $('#status');
+
+            $('form').ajaxForm({
+                beforeSend: function () {
+                    status.empty();
+                    var percentValue = '0%';
+                    bar.width(percentValue);
+                    percent.html(percentValue);
+                },
+                uploadProgress: function (event, position, total, percentComplete) {
+                    var percentValue = percentComplete + '%';
+                    bar.width(percentValue);
+                    percent.html(percentValue);
+                },
+                success: function (d) {
+                    var percentValue = '100%';
+                    bar.width(percentValue);
+                    percent.html(percentValue);
+                    $('#fu1').val('');
+                    alert(d.data);
+                    if (d.status === "1") {
+                        var url = $("#RedirectTo").val();
+                        location.href = url;
+                    } else {
+                        status.html(d.data);
+                    }
+                },
+                complete: function (xhr) {
+                    //status.html(xhr.responseText);
+                }
+            });
+        })();
+    </script>
+}

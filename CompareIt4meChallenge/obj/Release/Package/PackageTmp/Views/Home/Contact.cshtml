@@ -1,0 +1,13 @@
+﻿@model CompareIt4meChallenge.Models.TemperateVeiw
+@{
+    ViewBag.Title = "Contact";
+}
+
+<form method="get">
+
+    <input type="search" name="searchTerm" />
+    <input type="submit" value="Temperature to Convert"/>
+    <h2>Temperature will convert From Fahrenheit to Celsius</h2>
+</form>
+
+<h4>Temperature in Celsius : @Model.Temperature</h4>

@@ -1,0 +1,10 @@
+﻿@model IEnumerable<CompareIt4meChallenge.Models.Person>
+
+@foreach (var item in Model)
+{
+    <div class="review">
+        <h4>Name: @item.Name</h4>
+        <span>Coin: @item.Coin</span>
+        <p>Code:  @item.Code</p>
+    </div>
+}
